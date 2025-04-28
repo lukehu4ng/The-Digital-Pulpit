@@ -208,13 +208,6 @@ with tab1:
                             # Create temp directory
                             temp_dir = tempfile.mkdtemp()
 
-                            # First, check if FFmpeg is installed
-                            ffmpeg_installed = False
-                            try:
-                                subprocess.run(['ffmpeg', '-version'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-                                ffmpeg_installed = True
-                            except:
-                                st.warning("FFmpeg not found. Cannot determine audio duration or convert formats. Will use Whisper-1 model only.")
 
                             # Reduced max seconds with safety buffer to avoid hitting the limit
                             MAX_SEC = 1490          # ~24.8 min limit for gpt-4o (with buffer)
