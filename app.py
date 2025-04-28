@@ -108,20 +108,24 @@ def generate_wordcloud(text, title=""):
     processed_text = ' '.join(filtered_words)
     
     # Try to find a suitable font for Chinese text
-    font_paths = [
-        '/System/Library/Fonts/STHeiti Medium.ttc',  # macOS
-        '/System/Library/Fonts/PingFang.ttc',  # macOS
-        'C:/Windows/Fonts/simhei.ttf',  # Windows
-        'C:/Windows/Fonts/msyh.ttc',  # Windows
-        '/usr/share/fonts/truetype/arphic/uming.ttc',  # Linux
-        '/usr/share/fonts/truetype/droid/DroidSansFallback.ttf'  # Linux
-    ]
-    
+    # First, check for NotoSansTC-Regular.ttf in the current directory (repo root)
+    custom_font = "NotoSansTC-Regular.ttf"
     font_path = None
-    for path in font_paths:
-        if os.path.exists(path):
-            font_path = path
-            break
+    if os.path.exists(custom_font):
+        font_path = custom_font
+    else:
+        font_paths = [
+            '/System/Library/Fonts/STHeiti Medium.ttc',  # macOS
+            '/System/Library/Fonts/PingFang.ttc',  # macOS
+            'C:/Windows/Fonts/simhei.ttf',  # Windows
+            'C:/Windows/Fonts/msyh.ttc',  # Windows
+            '/usr/share/fonts/truetype/arphic/uming.ttc',  # Linux
+            '/usr/share/fonts/truetype/droid/DroidSansFallback.ttf'  # Linux
+        ]
+        for path in font_paths:
+            if os.path.exists(path):
+                font_path = path
+                break
     
     if not font_path:
         st.warning("No suitable Chinese font found. Word cloud may not display Chinese characters correctly.")
